@@ -1,0 +1,57 @@
+name: Bug report
+description: Report a problem with termux-usbmuxd.
+title: "[Bug]: "
+labels:
+  - bug
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug!
+
+  - type: input
+    id: android
+    attributes:
+      label: Android version
+      placeholder: Android 15
+
+  - type: input
+    id: device
+    attributes:
+      label: Android device
+      placeholder: Samsung Galaxy S23
+
+  - type: input
+    id: ios
+    attributes:
+      label: iOS version
+      placeholder: iOS 26.1
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      placeholder: Describe the issue.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1.
+        2.
+        3.
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Terminal output
+      render: shell
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Additional information
