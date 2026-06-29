@@ -23,7 +23,7 @@ Now that `usbmuxd` and the wrapper `termux-usbmuxd` have already been installed 
 
 # Sideloading on the iDevice from a PRoot-Distro
 
-This part is already optional, but if what you want is to achieve lateral loading on your iDevice, this is very important and you must follow the steps very carefully, for this example I will use iLoader as a sideload reference but you can use any software to interact with your iDevice as long as it has a version for Linux over ARM64
+This part is already optional, but if what you want is to achieve sideloading on your iDevice, this is very important and you must follow the steps very carefully, for this example I will use iLoader as a sideload reference but you can use any software to interact with your iDevice as long as it has a version for Linux over ARM64
 
 - Install PRoot-Distro if you don't already have it with the command `pkg install proot-distro`
 - Once installed, install any distro between Debian and Ubuntu with `pd i distro` where `distro` is the one you choose, For this example I will use Ubuntu
