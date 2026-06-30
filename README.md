@@ -1,102 +1,68 @@
-# termux-usbmuxd
+# Termux-Usbmuxd (Improved)
 
-Run `usbmuxd` on unrooted Termux to communicate with iOS devices over USB.
+Chạy `usbmuxd` không cần root trên Termux thông qua `termux-usb`. Phiên bản cải tiến này hỗ trợ tự động phát hiện thiết bị và tối ưu hóa quy trình kết nối.
 
-No root required. Works by passing USB device access through `termux-usb` (Termux:API).
+## Cải tiến mới
 
-## Requirements
+- **Tự động phát hiện thiết bị**: Không còn cần chạy `termux-usb -l` để tìm đường dẫn thủ công. Chỉ cần gõ `termux-usbmuxd`.
 
-- Android device with USB-OTG support
-- [Termux](https://f-droid.org/packages/com.termux/) (from F-Droid)
-- [Termux:API](https://f-droid.org/packages/com.termux.api/) (from F-Droid)
-- `usbmuxd` and `libimobiledevice` packages installed in Termux
-- USB OTG cable/adapter to connect your iPhone
+- **Tích hợp môi trường**: Tự động cấu hình `USBMUXD_SOCKET_ADDRESS` trong `.bashrc`.
 
-## Installation
+- **Ổn định hơn**: Xử lý quyền truy cập USB mượt mà hơn với flag `-r`.
+
+- **Tương thích cao**: Hoạt động tốt với `libimobiledevice` và `ideviceinstaller` trên các dòng iPhone mới nhất.
+
+## Cài đặt
+
+Mở Termux và chạy lệnh sau:
 
 ```bash
-pkg install usbmuxd libimobiledevice termux-api
-git clone https://github.com/usedoperative-sudo/termux-usbmuxd
+pkg install -y git
+git clone https://github.com/vuphan0246810/termux-usbmuxd
 cd termux-usbmuxd
-chmod +x termux-usbmuxd
-cp termux-usbmuxd $PREFIX/bin/
+bash install.sh
 ```
 
-Or install directly:
+## Cách sử dụng
 
-```bash
-curl -sL https://raw.githubusercontent.com/usedoperative-sudo/termux-usbmuxd/main/install.sh | bash
-```
+1. **Kết nối iPhone** vào điện thoại Android qua cáp USB-OTG.
 
-## Usage
+1. **Chạy lệnh**:
 
-### 1. Connect your iPhone via USB-OTG
+   ```bash
+   termux-usbmuxd
+   ```
 
-### 2. Find your device
+1. **Cấp quyền**: Một hộp thoại Android sẽ hiện lên yêu cầu quyền truy cập USB, hãy chọn "OK".
 
-```bash
-termux-usb -l
-```
+1. **Ghép nối**:
 
-Example output: `/dev/bus/usb/001/002`
+   ```bash
+   idevicepair pair
+   ```
 
-### 3. Start usbmuxd
+   (Nhấn "Tin cậy/Trust" trên màn hình iPhone nếu được hỏi ).
 
-```bash
-termux-usbmuxd /dev/bus/usb/001/002
-```
+1. **Kiểm tra kết nối**:
 
-You should see:
+   ```bash
+   idevicename
+   ```
 
-```
-==> starting usbmuxd for /dev/bus/usb/001/002
-    socket: /data/data/com.termux/files/usr/var/run/usbmuxd
-    pidfile: /data/data/com.termux/files/usr/var/run/usbmuxd.pid
-    pairing: /data/data/com.termux/files/usr/var/lib/lockdown
-==> usbmuxd running (pid 12345)
-    socket: /data/data/com.termux/files/usr/var/run/usbmuxd
-    export USBMUXD_SOCKET_ADDRESS=UNIX:/data/data/com.termux/files/usr/var/run/usbmuxd
-```
+## Các lệnh hữu ích khác
 
-### 4. Set the socket address
+- `ideviceinfo`: Xem thông tin chi tiết thiết bị.
 
-```bash
-export USBMUXD_SOCKET_ADDRESS=UNIX:$PREFIX/var/run/usbmuxd
-```
+- `ideviceinstaller -l`: Liệt kê các ứng dụng đã cài đặt.
 
-### 5. Pair with your iPhone
+- `ideviceinstaller -i app.ipa`: Cài đặt file IPA.
 
-```bash
-idevicepair pair
-```
+## Khắc phục lỗi
 
-Unlock your iPhone and tap "Trust This Computer" when prompted then execute the command again.
+Nếu không tìm thấy thiết bị:
 
-### 6. Verify connection
+1. Đảm bảo cáp OTG hoạt động tốt.
 
-```bash
-ideviceinfo
-```
+1. Thử rút cáp và cắm lại.
 
-With this tool you can install SideStore to sideload wirelessly from your Android device. (More info [here](https://github.com/usedoperative-sudo/termux-usbmuxd/blob/main/Step-To-Step.md))
-
-## Options
-
-| Option | Description | Default |
-|--------|-------------|---------|
-| `-s, --socket ADDR` | Socket address (TCP: `127.0.0.1:27015`) | `$PREFIX/var/run/usbmuxd` |
-| `-p, --pidfile PATH` | PID file path (`NONE` to disable) | `$PREFIX/var/run/usbmuxd.pid` |
-| `-f, --foreground` | Run in foreground | background |
-| `-v, --verbose` | Verbose output | off |
-
-## How it works
-
-Normally `usbmuxd` needs root to access `/dev/bus/usb/*`. On Android, Termux is sandboxed and can't access these device files.
-
-Termux:API provides `termux-usb`, which uses Android's USB API to claim a USB device. With the `-E` flag, it can execute a child process with the USB file descriptor accessible, effectively giving `usbmuxd` the USB access it needs without root.
-
-Since Termux's `usbmuxd` package is already compiled with `$PREFIX` paths, the socket and pairing directories work out of the box. This wrapper focuses on providing the USB device access through `termux-usb`.
-
-## License
-
-MIT
+1. Chạy `termux-usb -l` để kiểm tra xem Android có nhận diện được thiết bị không.
