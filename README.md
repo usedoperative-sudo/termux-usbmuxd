@@ -99,4 +99,4 @@ Since Termux's `usbmuxd` package is already compiled with `$PREFIX` paths, the s
 
 ## License
 
-MIT
+[GPLv3.0](https://github.com/usedoperative-sudo/termux-usbmuxd/blob/main/LICENSE)
