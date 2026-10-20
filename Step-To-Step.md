@@ -26,7 +26,7 @@ Now that `usbmuxd` and the wrapper `termux-usbmuxd` have already been installed 
 This part is already optional, but if what you want is to achieve sideloading on your iDevice, this is very important and you must follow the steps very carefully, for this example I will use iLoader as a sideload reference but you can use any software to interact with your iDevice as long as it has a version for Linux over ARM64
 
 - Install PRoot-Distro if you don't already have it with the command `pkg install proot-distro`
-- Once installed, install any distro between Debian and Ubuntu with `pd i distro` where `distro` is the one you choose, For this example I will use Ubuntu
+- Once installed, install any Debian/Ubuntu-based distro with `pd i distro` where `distro` is the one you choose, For this example I will use Ubuntu
 -  Enter the distro you chose with the following command `pd sh ubuntu -b $PREFIX/var/run:/var/run -b $PREFIX/var/lib/lockdown:/var/lib/lockdown`
 
 > [!WARNING]
